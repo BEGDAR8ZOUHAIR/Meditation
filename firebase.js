@@ -1,20 +1,25 @@
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+require("dotenv").config();
 
-// import { initializeApp } from 'firebase/app';
-// import { getAuth } from 'firebase/auth';
+const firebaseConfig = {
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId,
+  measurementId: process.env.measurementId
+};
 
-// // Initialize Firebase
-// const firebaseConfig = {
- 
-// 	apiKey: "AIzaSyAZ-sEf7w3PEA3JvmxJyFcEjYlGGyjJg1U",
-//   authDomain: "cattle-zoo.firebaseapp.com",
-//   projectId: "cattle-zoo",
-//   storageBucket: "cattle-zoo.appspot.com",
-//   messagingSenderId: "925901692717",
-//   appId: "1:925901692717:web:ae5627ff8a36d899c47da4",
-//   measurementId: "G-FD2THPF3H6"
-// };
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-// const app = initializeApp(firebaseConfig);
+// Initialize Firebase services
+const auth = getAuth(app);
+const firestore = getFirestore(app);
+const storage = getStorage(app);
 
-// export const auth = getAuth();
-// export default app;
+export { app, auth, firestore, storage };

@@ -8,9 +8,11 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState<string>("");
 
   const handleRegister = () => {
+    console.log("User created");
     createUserWithEmailAndPassword(getAuth(), email, password)
+
       .then((user) => {
-        if (user) router.replace("/(tabs)");
+        if (user) router.replace("/login");
       })
       .catch((err) => {
         alert(err?.message);

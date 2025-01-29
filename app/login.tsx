@@ -10,7 +10,7 @@ export default function LoginScreen() {
   const handleLogin = () => {
     signInWithEmailAndPassword(getAuth(), email, password)
       .then((user) => {
-        if (user) router.replace("/(tabs)");
+        if (user) router.replace("/homeScreen");
       })
       .catch((err) => {
         alert(err?.message);

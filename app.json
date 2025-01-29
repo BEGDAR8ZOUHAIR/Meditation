@@ -13,13 +13,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.begdar8zouhair.meditation"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.begdar8zouhair.meditation"
     },
     "web": {
       "bundler": "metro",
@@ -28,11 +30,7 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font",
-      "expo-dev-client",
-      {
-        "launchMode": "most-recent"
-      }
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
