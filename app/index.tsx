@@ -23,7 +23,7 @@ const WelcomScreen = () => {
     <View style={styles.container}>
       <Image source={require("../assets/images/logo.png")} resizeMode="contain" style={styles.bannerImage} />
       <View style={styles.contentContainer}>
-        <Text variant="headlineMedium" style={styles.title}>Welcome to Meditation</Text>
+        <Text variant="displayLarge" style={styles.title}>Welcome to Meditation</Text>
         <Text variant="bodyLarge" style={styles.description}>
           Start your journey to a healthier
         </Text>
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
     bannerImage: {
       height: mvs(200, GLOBAL_SCALE),
       width: mvs(200, GLOBAL_SCALE),
-      marginBottom: theme.spacingVertical(8),
     } as ImageStyle,
     contentContainer: {
       flex: 1,

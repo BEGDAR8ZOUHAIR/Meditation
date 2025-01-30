@@ -9,7 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text } from "react-native-paper";
 
 type Props = {
-  title: string;
+  title?: string;
   leftIcon?: IconProp;
   onLeftPress?: () => void;
 }

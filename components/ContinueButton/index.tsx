@@ -105,11 +105,11 @@ const ContinueButtonStyles = makeStyles((theme, props?: { disabled?: boolean }) 
 			justifyContent: "center",
 			alignItems: "center",
 			gap: theme.spacingHorizontal(2),
-			borderRadius: theme.borderRadius.large,
+			borderRadius: theme.borderRadius.small,
 			paddingHorizontal: theme.spacingHorizontal(4),
 		},
 		rippleContainer: {
-			borderRadius: theme.borderRadius.large,
+			borderRadius: theme.borderRadius.small,
 			height: vs(50),
 		},
 		textStyle: {
