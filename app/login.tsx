@@ -1,54 +1,63 @@
-import { Button, StyleSheet, TextInput, Text, View } from "react-native";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
-import { router } from "expo-router";
 
-export default function LoginScreen() {
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { router } from "expo-router";
+import { makeStyles, useAppTheme } from "@/theme/makeStyles";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useCustomNavigation } from "@/hooks/navigation";
+import { NavigationRoutes } from "@/constants/navigation";
+import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+
+const LoginScreen = () => {
+  const insets = useSafeAreaInsets();
+  const styles = useStyles({ insets });
+  const navigation = useCustomNavigation();
+  const theme = useAppTheme();
+  const [secureEntery, setSecureEntery] = useState(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
 
   const handleLogin = () => {
     signInWithEmailAndPassword(getAuth(), email, password)
       .then((user) => {
-        if (user) router.replace("/homeScreen");
+        if (user) navigation.navigate(NavigationRoutes.HOME);
       })
       .catch((err) => {
         alert(err?.message);
       });
   };
+
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Screen</Text>
-      <TextInput
-        style={{ backgroundColor: "white", width: "80%", padding: 10 }}
-        placeholder="Email"
-        keyboardType="email-address"
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        style={{ backgroundColor: "white", width: "80%", padding: 10 }}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-      />
-      <Button title={"Login"} onPress={handleLogin} />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
+export default LoginScreen;
+
+const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
+  const { insets } = props || { insets: { top: 0, bottom: 0 } };
+  return {
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      alignItems: "center",
+      paddingTop: insets.top + theme.spacingVertical(8),
+
+    }
+
+  }
 });

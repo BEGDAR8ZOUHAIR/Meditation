@@ -1,4 +1,3 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -6,11 +5,10 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { User } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import useInit from '@/hooks/init';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAZ-sEf7w3PEA3JvmxJyFcEjYlGGyjJg1U",
@@ -31,29 +29,29 @@ SplashScreen.preventAutoHideAsync();
 
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    "Quicksand-Light": require("@/assets/fonts/Quicksand/Quicksand-Light.ttf"),
-    "Quicksand-Regular": require("@/assets/fonts/Quicksand/Quicksand-Regular.ttf"),
-    "Quicksand-Medium": require("@/assets/fonts/Quicksand/Quicksand-Medium.ttf"),
-    "Quicksand-Bold": require("@/assets/fonts/Quicksand/Quicksand-Bold.ttf"),
-    "Quicksand-SemiBold": require("@/assets/fonts/Quicksand/Quicksand-SemiBold.ttf"),
-  });
+
+
+  const { defaultTheme, fontsLoaded, fontError } = useInit();
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    if (fontsLoaded) {
+      SplashScreen.hideAsync().catch(console.error); // Add error handling
     }
-  }, [loaded]);
+  }, [fontsLoaded]);
 
-  if (!loaded) {
+  if (fontError) {
+    console.error('Error loading fonts:', fontError);
+    return null;
+  }
+
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <PaperProvider theme={defaultTheme}>
           <Stack>
             {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
             <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -61,7 +59,7 @@ export default function RootLayout() {
             <Stack.Screen name="register" options={{ headerShown: false }} />
             <Stack.Screen name="homeScreen" options={{ headerShown: false }} />
           </Stack>
-        </ThemeProvider>
+        </PaperProvider>
       </PaperProvider>
     </GestureHandlerRootView>
 
