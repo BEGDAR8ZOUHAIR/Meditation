@@ -15,6 +15,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCustomNavigation } from "@/hooks/navigation";
 import { NavigationRoutes } from "@/constants/navigation";
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import Header from "@/components/header/Header";
+
 
 const LoginScreen = () => {
   const insets = useSafeAreaInsets();
@@ -42,6 +44,9 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Header
+        title="Login"
+      />
     </View>
   );
 };
@@ -55,7 +60,7 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
       flex: 1,
       backgroundColor: theme.colors.background,
       alignItems: "center",
-      paddingTop: insets.top + theme.spacingVertical(8),
+      paddingTop: insets.top + theme.spacingVertical(4),
 
     }
 

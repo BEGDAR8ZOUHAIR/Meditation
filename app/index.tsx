@@ -25,7 +25,7 @@ const WelcomScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/images/man.png")} resizeMode="contain" style={styles.bannerImage} />
+      <Image source={require("../assets/images/logo.png")} resizeMode="contain" style={styles.bannerImage} />
       <View style={styles.contentContainer}>
         <Text variant="headlineMedium" style={styles.title}>Welcome to Meditation</Text>
         <Text variant="bodyLarge" style={styles.description}>
@@ -36,13 +36,13 @@ const WelcomScreen = () => {
             middleText={"Login"}
             onPress={() => navigation.navigate(NavigationRoutes.LOGIN)}
             containerStyle={styles.loginButton}
-            middleTextStyle={{ color: theme.colors.neutralVariants[900] }}
+            middleTextStyle={{ color: theme.colors.neutralVariants[900], fontSize: mvs(16, GLOBAL_SCALE) }}
           />
           <ContinueButton
             middleText={"Register"}
             onPress={() => navigation.navigate(NavigationRoutes.REGISTER)}
             containerStyle={styles.loginButton}
-            middleTextStyle={{ color: theme.colors.neutralVariants[900] }}
+            middleTextStyle={{ color: theme.colors.neutralVariants[900], fontSize: mvs(16, GLOBAL_SCALE) }}
           />
         </View>
       </View>
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
       flex: 1,
       backgroundColor: theme.colors.background,
       alignItems: "center",
-      paddingTop: insets.top + theme.spacingVertical(8),
+      paddingTop: insets.top + theme.spacingVertical(5),
     },
     bannerImage: {
       height: mvs(200, GLOBAL_SCALE),
@@ -76,21 +76,22 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
       paddingHorizontal: theme.spacingHorizontal(4),
       borderTopLeftRadius: theme.borderRadius.large,
       borderTopRightRadius: theme.borderRadius.large,
-
+      marginTop: theme.spacingVertical(12),
     },
     title: {
-      color: theme.colors.background,
+      color: theme.colors.tertiaryVariants[900],
       textAlign: "center",
     },
     description: {
-      color: theme.colors.background,
+      color: theme.colors.tertiaryVariants[900],
       textAlign: "center",
+
     },
     loginButton: {
       backgroundColor: theme.colors.background,
     },
     buttonContainer: {
-      marginTop: theme.spacingVertical(12),
+      marginTop: theme.spacingVertical(5),
       width: "100%",
       paddingHorizontal: theme.spacingHorizontal(2),
       gap: theme.spacingVertical(4),

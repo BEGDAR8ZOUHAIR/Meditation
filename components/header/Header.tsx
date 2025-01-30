@@ -1,65 +1,63 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { StyleSheet } from 'react-native';
-
-type HeaderButton = {
-  child: JSX.Element;
-  onPress?: () => void;
-};
+import React from "react";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { useNavigation } from "@react-navigation/native";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { makeStyles, useAppTheme } from "@/theme/makeStyles";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Text } from "react-native-paper";
 
 type Props = {
-  leftButton?: HeaderButton;
-  rightButton?: HeaderButton;
-	middleButton?: HeaderButton;
-};
+  title: string;
+  leftIcon?: IconProp;
+  onLeftPress?: () => void;
+}
 
- const Header = (props: Props) => {
-  const {leftButton, rightButton, middleButton} = props;
+export default function Header({ title, leftIcon = faArrowLeftLong as any, onLeftPress }: Props) {
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+  const styles = useStyles({ insets });
+  const theme = useAppTheme();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        {leftButton && (
-          <TouchableOpacity onPress={leftButton.onPress}>
-            {leftButton.child}
-          </TouchableOpacity>
-        )}
-      </View>
-			{middleButton && <Text style={styles.middleContainer}>{middleButton.child}</Text>}
-      <View style={styles.rightContainer}>
-        {rightButton && (
-          <TouchableOpacity onPress={rightButton.onPress}>
-            {rightButton.child}
-          </TouchableOpacity>
-        )}
-      </View>
+    <View style={styles.header}>
+      {leftIcon && (
+        <TouchableOpacity
+          onPress={onLeftPress ? onLeftPress : () => navigation.goBack()}
+          style={styles.iconButton}
+        >
+          <FontAwesomeIcon icon={leftIcon} size={20} color="" />
+        </TouchableOpacity>
+      )}
+      <Text variant="headlineMedium" style={styles.title}>{title}</Text>
+      <View testID="rightPlaceholder" style={styles.rightPlaceholder} />
     </View>
   );
-};
+}
 
 
-export default Header;
+const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
+  const { insets } = props || { insets: { top: 0, bottom: 0 } };
+  return {
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingVertical: insets.top + theme.spacingVertical(2),
+      paddingHorizontal: theme.spacingHorizontal(4),
+    },
+    iconButton: {
+      // padding: 10,
+    },
+    title: {
+      color: theme.colors.neutralVariants[900],
+      flex: 1,
+      textAlign: "center",
+    },
+    rightPlaceholder: {
+      // width: 40,
+    },
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-  },
-  leftContainer: {
-    flex: 1,
-    alignItems: 'flex-start',
-  },
-  rightContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  middleContainer: {
-    flex: 1,
-    alignItems: 'center',
-		textAlign: 'center',
-    color: 'black',
-  },
+  }
 });

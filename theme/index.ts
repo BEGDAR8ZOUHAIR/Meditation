@@ -50,90 +50,6 @@ export interface theme extends MD3Theme {
 	fonts: { [key: string]: unknown };
 
 }
-
-export const arabicFonts = {
-	displaySmall: {
-		fontFamily: "Vazirmatn-Black",
-		fontSize: 30,
-		letterSpacing: 0,
-	},
-
-	displayMedium: {
-		fontFamily: "Vazirmatn-Black",
-		fontSize: 35,
-		letterSpacing: 0,
-	},
-	displayLarge: {
-		fontFamily: "Vazirmatn-Black",
-		fontSize: 35,
-		letterSpacing: 0,
-	},
-
-	headlineLarge: {
-		fontFamily: "Vazirmatn-Bold",
-		fontSize: 32,
-		letterSpacing: 0,
-	},
-	headlineMedium: {
-		fontFamily: "Vazirmatn-Bold",
-		fontSize: 28,
-		letterSpacing: 0,
-	},
-	headlineSmall: {
-		fontFamily: "Vazirmatn-Bold",
-		fontSize: 24,
-		letterSpacing: 0,
-	},
-
-	titleLarge: {
-		fontFamily: "Vazirmatn-SemiBold",
-		fontSize: 22,
-		letterSpacing: 0,
-	},
-	titleMedium: {
-		fontFamily: "Vazirmatn-SemiBold",
-		fontSize: 16,
-		letterSpacing: 0,
-	},
-	titleSmall: {
-		fontFamily: "Vazirmatn-SemiBold",
-		fontSize: 14,
-		letterSpacing: 0,
-	},
-
-	labelLarge: {
-		fontFamily: "Vazirmatn-Medium",
-		fontSize: 14,
-		fontWeight: "500",
-		letterSpacing: 0,
-	},
-	labelMedium: {
-		fontFamily: "Vazirmatn-Medium",
-		fontSize: 12,
-		letterSpacing: 0,
-	},
-	labelSmall: {
-		fontFamily: "Vazirmatn-Medium",
-		fontSize: 11,
-		letterSpacing: 0,
-	},
-
-	bodyLarge: {
-		fontFamily: "Vazirmatn-Regular",
-		fontSize: 16,
-		letterSpacing: 0,
-	},
-	bodyMedium: {
-		fontFamily: "Vazirmatn-Regular",
-		fontSize: 14,
-		letterSpacing: 0,
-	},
-	bodySmall: {
-		fontFamily: "Vazirmatn-Regular",
-		fontSize: 12,
-		letterSpacing: 0,
-	},
-};
 export const englishFonts = {
 	displaySmall: {
 		fontFamily: "Quicksand-Bold",
@@ -245,7 +161,7 @@ const theme = {
 	},
 	spacingHorizontal: (index: number) => ms([0, 4, 8, 12, 16, 24, 32, 48, 56, 64, 72, 80, 96, 128][index], GLOBAL_SCALE),
 	spacingVertical: (index: number) => mvs([0, 4, 8, 12, 16, 24, 32, 48, 56, 64, 72, 80, 96, 128][index], GLOBAL_SCALE),
-	fonts: arabicFonts,
+	fonts: englishFonts
 };
 
 const lightVariants = {
@@ -257,7 +173,7 @@ const lightVariants = {
 		"200": "#96EED9",
 		"300": "#61E5C6",
 		"400": "#2DDCB3",
-		"500": "#1DB18E",
+		"500": "#61B15A",
 		"600": "#178C71",
 		"700": "#116955",
 		"800": "#0C4638",
@@ -323,7 +239,7 @@ const darkVariants = {
 		"200": "#96EED9",
 		"300": "#61E5C6",
 		"400": "#2DDCB3",
-		"500": "#1DB18E",
+		"500": "#61B15A",
 		"600": "#178C71",
 		"700": "#116955",
 		"800": "#0C4638",
@@ -385,10 +301,10 @@ const lightTheme: theme = {
 	colors: {
 		...DefaultTheme.colors,
 		...lightVariants,
-		primary: "#1DB18E",
+		primary: "#61B15A",
 		onPrimary: "#FFFFFF",
 		primaryContainer: "#E5FBF6",
-		onPrimaryContainer: "#1DB18E",
+		onPrimaryContainer: "#61B15A",
 
 		secondary: "#FFB500",
 		onSecondary: "#FFFFFF",
@@ -422,7 +338,7 @@ const darkTheme: theme = {
 	colors: {
 		...DefaultTheme.colors,
 		...darkVariants,
-		primary: "#1DB18E",
+		primary: "#61B15A",
 		onPrimary: "#161622",
 		primaryContainer: "#06231C",
 		onPrimaryContainer: "#2DDCB3",

@@ -13,23 +13,6 @@ export default function useInit() {
 		"Quicksand-Medium": require("@/assets/fonts/Quicksand/Quicksand-Medium.ttf"),
 		"Quicksand-Bold": require("@/assets/fonts/Quicksand/Quicksand-Bold.ttf"),
 		"Quicksand-SemiBold": require("@/assets/fonts/Quicksand/Quicksand-SemiBold.ttf"),
-
-		"Vazirmatn-Black": require("@/assets/fonts/Vazirmatn/Vazirmatn-Black.ttf"),
-		"Vazirmatn-Bold": require("@/assets/fonts/Vazirmatn/Vazirmatn-Bold.ttf"),
-		"Vazirmatn-Light": require("@/assets/fonts/Vazirmatn/Vazirmatn-Light.ttf"),
-		"Vazirmatn-Regular": require("@/assets/fonts/Vazirmatn/Vazirmatn-Regular.ttf"),
-		"Vazirmatn-Thin": require("@/assets/fonts/Vazirmatn/Vazirmatn-Thin.ttf"),
-		"Vazirmatn-Medium": require("@/assets/fonts/Vazirmatn/Vazirmatn-Medium.ttf"),
-		"Vazirmatn-ExtraBold": require("@/assets/fonts/Vazirmatn/Vazirmatn-ExtraBold.ttf"),
-		"Vazirmatn-ExtraLight": require("@/assets/fonts/Vazirmatn/Vazirmatn-ExtraLight.ttf"),
-		"Vazirmatn-SemiBold": require("@/assets/fonts/Vazirmatn/Vazirmatn-SemiBold.ttf"),
-
-		"OpenSans-Bold": require("@/assets/fonts/OpenSans/OpenSans-Bold.ttf"),
-		"OpenSans-ExtraBold": require("@/assets/fonts/OpenSans/OpenSans-ExtraBold.ttf"),
-		"OpenSans-Light": require("@/assets/fonts/OpenSans/OpenSans-Light.ttf"),
-		"OpenSans-Regular": require("@/assets/fonts/OpenSans/OpenSans-Regular.ttf"),
-		"OpenSans-SemiBold": require("@/assets/fonts/OpenSans/OpenSans-SemiBold.ttf"),
-		"OpenSans-Medium": require("@/assets/fonts/OpenSans/OpenSans-Medium.ttf"),
 	});
 
 
