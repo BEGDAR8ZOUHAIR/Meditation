@@ -5,7 +5,6 @@
 
 import { Image, ImageStyle, View } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { useCustomNavigation } from "@/hooks/navigation";
 import { makeStyles, useAppTheme } from "@/theme/makeStyles";
 import { NavigationRoutes } from "@/constants/navigation";
@@ -20,9 +19,6 @@ const WelcomScreen = () => {
   const styles = useStyles({ insets });
   const navigation = useCustomNavigation();
   const theme = useAppTheme();
-
-
-
   return (
     <View style={styles.container}>
       <Image source={require("../assets/images/logo.png")} resizeMode="contain" style={styles.bannerImage} />
@@ -56,7 +52,6 @@ export default WelcomScreen;
 const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
   const { insets } = props || { insets: { top: 0, bottom: 0 } };
   return {
-
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
@@ -85,7 +80,6 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
     description: {
       color: theme.colors.tertiaryVariants[900],
       textAlign: "center",
-
     },
     loginButton: {
       backgroundColor: theme.colors.background,
