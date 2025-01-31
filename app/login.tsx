@@ -4,17 +4,17 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import { makeStyles, useAppTheme } from "@/theme/makeStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCustomNavigation } from "@/hooks/navigation";
 import { NavigationRoutes } from "@/constants/navigation";
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import Header from "@/components/header/Header";
 import { TextInput, Text } from 'react-native-paper';
 import ContinueButton from "@/components/ContinueButton";
 import { mvs } from "react-native-size-matters";
 import { GLOBAL_SCALE } from "@/constants/device";
+import { useForm } from "react-hook-form";
 
 
 const LoginScreen = () => {
@@ -26,15 +26,19 @@ const LoginScreen = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
 
   const handleLogin = () => {
     console.log("User logged in");
     signInWithEmailAndPassword(getAuth(), email, password)
       .then((user) => {
         if (user) navigation.navigate(NavigationRoutes.HOME);
+        console.log("User logged in+++++++++++++++++++++++++++++++++++++++++++++>>>>", user);
       })
       .catch((err) => {
         alert(err?.message);
+        console.log("User logged in+++++++++++++++++++++++++++++++++++++++++++++>>>>", err);
       });
   };
 
@@ -71,6 +75,13 @@ const LoginScreen = () => {
           placeholder="Password"
           style={styles.input}
           secureTextEntry={secureEntery}
+          right={
+            <TextInput.Icon
+              icon={secureEntery ? "eye-off" : "eye"}
+              onPress={() => setSecureEntery(!secureEntery)}
+              style={{ marginTop: mvs(30, GLOBAL_SCALE) }}
+            />
+          }
         />
       </View>
       <View style={styles.forgotPasswordContainer}>
@@ -170,3 +181,4 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
 
   };
 });
+

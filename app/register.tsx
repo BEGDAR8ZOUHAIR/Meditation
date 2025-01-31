@@ -78,6 +78,13 @@ const RegisterScreen = () => {
           placeholder="Password"
           style={styles.input}
           secureTextEntry={secureEntery}
+          right={
+            <TextInput.Icon
+              icon={secureEntery ? "eye-off" : "eye"}
+              onPress={() => setSecureEntery(!secureEntery)}
+              style={{ marginTop: mvs(30, GLOBAL_SCALE) }}
+            />
+          }
         />
       </View>
       <View style={styles.forgotPasswordContainer}>
