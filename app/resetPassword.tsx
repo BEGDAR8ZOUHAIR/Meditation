@@ -3,13 +3,11 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { Link, router } from "expo-router";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { makeStyles, useAppTheme } from "@/theme/makeStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCustomNavigation } from "@/hooks/navigation";
 import { NavigationRoutes } from "@/constants/navigation";
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import Header from "@/components/header/Header";
 import { TextInput, Text } from 'react-native-paper';
 import ContinueButton from "@/components/ContinueButton";
@@ -17,29 +15,25 @@ import { mvs } from "react-native-size-matters";
 import { GLOBAL_SCALE } from "@/constants/device";
 
 
-const LoginScreen = () => {
+const ResetPasswordScreen = () => {
   const insets = useSafeAreaInsets();
   const styles = useStyles({ insets });
   const navigation = useCustomNavigation();
   const theme = useAppTheme();
-  const [secureEntery, setSecureEntery] = useState(true);
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
 
 
-  const handleLogin = () => {
+  const handleResetPassword = () => {
     console.log("User logged in");
-    signInWithEmailAndPassword(getAuth(), email, password)
-      .then((user) => {
-        if (user) navigation.navigate(NavigationRoutes.HOME);
+    sendPasswordResetEmail(getAuth(), email)
+      .then(() => {
+        navigation.navigate(NavigationRoutes.LOGIN);
       })
       .catch((err) => {
         alert(err?.message);
       });
+
   };
-
-
-
   return (
     <View style={styles.container}>
       <Header
@@ -47,12 +41,12 @@ const LoginScreen = () => {
       <View style={styles.textContainer}  >
         {/* Title */}
         <Text style={styles.title} variant="displayLarge">
-          {"Sign In"}
+          {"Reset Password"}
         </Text>
 
         {/* Description */}
         <Text style={styles.description} variant="bodyLarge">
-          {"Sign in now to acces your excercises and saved music."}
+          {"Enter your email to reset your password"}
         </Text>
       </View>
       <View style={styles.inputContainer}>
@@ -60,49 +54,23 @@ const LoginScreen = () => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           mode="flat"
-          placeholder="Email Address"
+          placeholder="Email"
           style={styles.input}
-          keyboardType="email-address"
         />
-        <TextInput
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          mode="flat"
-          placeholder="Password"
-          style={styles.input}
-          secureTextEntry={secureEntery}
-        />
-      </View>
-      <View style={styles.forgotPasswordContainer}>
-        <Link href="/resetPassword">
-          <Text style={styles.forgotPassword} variant="titleSmall">
-            {"Forgot Password?"}
-          </Text>
-        </Link>
       </View>
       <View style={styles.buttonContainer}>
         <ContinueButton
-          middleText={"Login"}
-          onPress={handleLogin}
+          middleText={"Reset Password"}
+          onPress={handleResetPassword}
           containerStyle={styles.loginButton}
           middleTextStyle={{ color: theme.colors.neutralVariants[900], fontSize: mvs(16, GLOBAL_SCALE) }}
         />
-      </View>
-      <View style={styles.textFooterContainer} >
-        <Text style={styles.textFooter} variant="bodyMedium">
-          {"Don’t have an account?"}{" "}
-          <Link href="/register">
-            <Text style={styles.link} variant="titleSmall">
-              {"Sign Up"}
-            </Text>
-          </Link>
-        </Text>
       </View>
     </View>
   );
 };
 
-export default LoginScreen;
+export default ResetPasswordScreen;
 
 const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
   const { insets } = props || { insets: { top: 0, bottom: 0 } };
@@ -136,11 +104,15 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
       borderRadius: theme.borderRadius.large,
       paddingVertical: theme.spacingVertical(2),
       paddingHorizontal: theme.spacingHorizontal(2),
+      marginTop: theme.spacingVertical(8),
+
+
     },
     buttonContainer: {
       width: "100%",
       paddingHorizontal: theme.spacingHorizontal(2),
       gap: theme.spacingVertical(4),
+      marginTop: theme.spacingVertical(8),
     },
     loginButton: {
       backgroundColor: theme.colors.primary,

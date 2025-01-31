@@ -46,12 +46,12 @@ const RegisterScreen = () => {
       <View style={styles.textContainer}  >
         {/* Title */}
         <Text style={styles.title} variant="displayLarge">
-          {"Sign In"}
+          {"Sign Up"}
         </Text>
 
         {/* Description */}
         <Text style={styles.description} variant="bodyLarge">
-          {"Sign in now to acces your excercises and saved music."}
+          {"Sign up now for free and start meditating, and explore Medic."}
         </Text>
       </View>
       <View style={styles.inputContainer}>
