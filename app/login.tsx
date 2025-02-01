@@ -1,8 +1,10 @@
-
+import React, { useState } from "react";
 import {
   View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform
 } from "react-native";
-import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link } from "expo-router";
 import { makeStyles, useAppTheme } from "@/theme/makeStyles";
@@ -14,102 +16,143 @@ import { TextInput, Text } from 'react-native-paper';
 import ContinueButton from "@/components/ContinueButton";
 import { mvs } from "react-native-size-matters";
 import { GLOBAL_SCALE } from "@/constants/device";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+// Validation schema
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters")
+});
 
 const LoginScreen = () => {
   const insets = useSafeAreaInsets();
   const styles = useStyles({ insets });
   const navigation = useCustomNavigation();
   const theme = useAppTheme();
-  const [secureEntery, setSecureEntery] = useState(true);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [secureEntry, setSecureEntry] = useState(true);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
 
-
-  const handleLogin = () => {
-    console.log("User logged in");
-    signInWithEmailAndPassword(getAuth(), email, password)
+  const onSubmit = (data: { email: string; password: string }) => {
+    signInWithEmailAndPassword(getAuth(), data.email, data.password)
       .then((user) => {
         if (user) navigation.navigate(NavigationRoutes.HOME);
-        console.log("User logged in+++++++++++++++++++++++++++++++++++++++++++++>>>>", user);
       })
       .catch((err) => {
         alert(err?.message);
-        console.log("User logged in+++++++++++++++++++++++++++++++++++++++++++++>>>>", err);
       });
   };
 
-
-
   return (
-    <View style={styles.container}>
-      <Header
-      />
-      <View style={styles.textContainer}  >
-        {/* Title */}
-        <Text style={styles.title} variant="displayLarge">
-          {"Sign In"}
-        </Text>
-
-        {/* Description */}
-        <Text style={styles.description} variant="bodyLarge">
-          {"Sign in now to acces your excercises and saved music."}
-        </Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          mode="flat"
-          placeholder="Email Address"
-          style={styles.input}
-          keyboardType="email-address"
-        />
-        <TextInput
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          mode="flat"
-          placeholder="Password"
-          style={styles.input}
-          secureTextEntry={secureEntery}
-          right={
-            <TextInput.Icon
-              icon={secureEntery ? "eye-off" : "eye"}
-              onPress={() => setSecureEntery(!secureEntery)}
-              style={{ marginTop: mvs(30, GLOBAL_SCALE) }}
-            />
-          }
-        />
-      </View>
-      <View style={styles.forgotPasswordContainer}>
-        <Link href="/resetPassword">
-          <Text style={styles.forgotPassword} variant="titleSmall">
-            {"Forgot Password?"}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={insets.bottom}
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <Header />
+        <View style={styles.textContainer}>
+          <Text style={styles.title} variant="displayLarge">
+            {"Sign In"}
           </Text>
-        </Link>
-      </View>
-      <View style={styles.buttonContainer}>
-        <ContinueButton
-          middleText={"Login"}
-          onPress={handleLogin}
-          containerStyle={styles.loginButton}
-          middleTextStyle={{ color: theme.colors.neutralVariants[900], fontSize: mvs(16, GLOBAL_SCALE) }}
-        />
-      </View>
-      <View style={styles.textFooterContainer} >
-        <Text style={styles.textFooter} variant="bodyMedium">
-          {"Don’t have an account?"}{" "}
-          <Link href="/register">
-            <Text style={styles.link} variant="titleSmall">
-              {"Sign Up"}
+          <Text style={styles.description} variant="bodyLarge">
+            {"Sign in now to access your exercises and saved music."}
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <>
+                <TextInput
+                  mode="flat"
+                  placeholder="Email Address"
+                  style={styles.input}
+                  keyboardType="email-address"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+                {errors.email && (
+                  <Text variant="bodySmall" style={styles.errorText}>
+                    {errors.email.message}
+                  </Text>
+                )}
+              </>
+            )}
+          />
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <>
+                <TextInput
+                  mode="flat"
+                  placeholder="Password"
+                  style={styles.input}
+                  secureTextEntry={secureEntry}
+                  right={
+                    <TextInput.Icon
+                      icon={secureEntry ? "eye-off" : "eye"}
+                      onPress={() => setSecureEntry(!secureEntry)}
+                      style={{ marginTop: mvs(30, GLOBAL_SCALE) }}
+                    />
+                  }
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+                {errors.password && (
+                  <Text variant="bodySmall" style={styles.errorText}>
+                    {errors.password.message}
+                  </Text>
+                )}
+              </>
+            )}
+          />
+        </View>
+        <View style={styles.forgotPasswordContainer}>
+          <Link href="/resetPassword">
+            <Text style={styles.forgotPassword} variant="titleSmall">
+              {"Forgot Password?"}
             </Text>
           </Link>
-        </Text>
-      </View>
-    </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <ContinueButton
+            middleText={"Login"}
+            onPress={handleSubmit(onSubmit)}
+            containerStyle={styles.loginButton}
+            middleTextStyle={{
+              color: theme.colors.neutralVariants[900],
+              fontSize: mvs(16, GLOBAL_SCALE)
+            }}
+          />
+        </View>
+        <View style={styles.textFooterContainer}>
+          <Text style={styles.textFooter} variant="bodyMedium">
+            {"Don't have an account?"}{" "}
+            <Link href="/register">
+              <Text style={styles.link} variant="titleSmall">
+                {"Sign Up"}
+              </Text>
+            </Link>
+          </Text>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -177,6 +220,9 @@ const useStyles = makeStyles((theme: any, props?: { insets: any }) => {
     forgotPassword: {
       textAlign: "center",
       color: theme.colors.neutralVariants[800],
+    },
+    errorText: {
+      color: theme.colors.error,
     },
 
   };
